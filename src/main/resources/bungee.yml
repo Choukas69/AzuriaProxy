@@ -1,0 +1,4 @@
+name: AzuriaProxy
+version: 1.0-SNAPSHOT
+author: Choukas
+main: fr.choukas.azuria.azuria_proxy.AzuriaProxy

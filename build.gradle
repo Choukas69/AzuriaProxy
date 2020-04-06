@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'fr.choukas.azuria'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        name = 'BungeeCord'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    maven {
+        name = 'Apache-Commons IO'
+        url = 'https://mvnrepository.com/artifact/commons-io/commons-io'
+    }
+    maven {
+        name = 'slf4j'
+        url = 'https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14'
+    }
+}
+
+dependencies {
+    compile group: 'net.md-5', name: 'bungeecord-api', version: '1.15-SNAPSHOT'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.30'
+
+    compile group: 'fr.choukas.azuria', name: 'AzuriaCommon', version: '1.0-SNAPSHOT'
+    compile group: 'fr.choukas.azuria', name: 'Messenger', version: '1.0-SNAPSHOT'
+}
+
+def pluginName = project.name + '.jar'
+
+shadowJar {
+    archiveFileName = pluginName
+    destinationDirectory = file('build/')
+}
+
+task copyToServer (type: Copy) {
+    from 'build/' + pluginName
+    into '/users/dev/desktop/azuria/proxy/plugins/'
+}
